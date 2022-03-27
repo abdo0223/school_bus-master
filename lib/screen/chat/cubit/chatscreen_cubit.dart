@@ -1,10 +1,30 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:school_bus/helper/constants.dart';
+import 'package:school_bus/model/school_user.dart';
+import 'package:school_bus/shared/cash_helper.dart';
 
-part 'chatscreen_state.dart';
+import 'chatscreen_state.dart';
 
-class ChatscreenCubit extends Cubit<ChatscreenState> {
-  ChatscreenCubit() : super(ChatscreenInitial());
+class SocialCubit extends Cubit<SocialStates> {
+  SocialCubit() : super(SocialInitialState());
+
+  static SocialCubit get(context) => BlocProvider.of(context);
+
+  SocialUserModel userModel;
+  void getUserData() {
+    emit(SocialLoadingState());
+    uId = CacheHelper.getData(key: 'uId');
+    FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
+      print(value.data());
+      userModel = SocialUserModel.fromJson(value.data());
+      emit(SocialGetUserSuccessState());
+    }).catchError((onError) {
+      emit(SocialGetUserErrorState(onError.toString()));
+    });
+  }
 
   List<SocialUserModel> users = [];
   void getUsers() {
