@@ -10,6 +10,7 @@ import 'package:school_bus/register.dart/cubit.dart';
 import 'package:school_bus/register.dart/state.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
+import 'package:school_bus/screen/chat/chatscreen.dart';
 import 'package:school_bus/screen/chat/chatyser.dart';
 
 class HomeScreen extends StatelessWidget {

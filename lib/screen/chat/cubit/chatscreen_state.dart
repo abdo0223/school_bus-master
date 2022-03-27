@@ -114,3 +114,4 @@ class SocialSignOutErrorState extends SocialStates {}
 class ChangerLoading extends SocialStates {}
 
 class ChangerSuccessfully extends SocialStates {}
+////////////////////////////////////////////////////////////////////////register
