@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_bus/network/dio_helper.dart';
-import 'package:school_bus/register.dart/cubit.dart';
-import 'package:school_bus/register.dart/state.dart';
 
 import 'package:school_bus/screen/chat/cubit/chatscreen_cubit.dart';
 import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
 
-import 'package:school_bus/screen/cubit/profile_screen.dart';
 import 'package:school_bus/screen/login.dart';
+
 import 'package:school_bus/shared/cash_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -19,14 +17,9 @@ void main() async {
   await Firebase.initializeApp();
   DioHelper.init();
   await CacheHelper.init();
-  Widget widget;
+
   runApp(MyApp());
-  var uId = CacheHelper.getData(key: 'uId');
-  if (uId != null) {
-    widget = HomeScreen();
-  } else {
-    widget = SchoolLoginScreen();
-  }
+  var uid = CacheHelper.getData(key: 'uId');
 }
 
 class MyApp extends StatelessWidget {
@@ -39,9 +32,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (BuildContext context) => SchoolRegisterCubit()),
+        BlocProvider(
+            create: (BuildContext context) => ChatCubit()..getUserData()),
       ],
-      child: BlocConsumer<SchoolRegisterCubit, SchoolRegisterState>(
+      child: BlocConsumer<ChatCubit, SchoolState>(
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(

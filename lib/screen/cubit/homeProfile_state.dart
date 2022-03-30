@@ -1,4 +1,4 @@
-part of 'profile_cubit.dart';
+part of 'homeprofile_cubit.dart';
 
 @immutable
 abstract class ProfileState {}

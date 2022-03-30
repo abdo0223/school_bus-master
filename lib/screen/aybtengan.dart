@@ -115,3 +115,56 @@ class _OnBoardingState extends State<OnBoarding> {
   }
 }
  */
+ /* appBar: AppBar(
+                          toolbarHeight: 50,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  bottomRight: Radius.circular(25))),
+                          leading: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Color(0XFFFFAB4C),
+                              size: 28,
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                          backgroundColor: Colors.white,
+                          titleSpacing: 0.0,
+                          title: Row(
+                            children: [
+                              /*  CircleAvatar(
+                                radius: 20.0,
+                                /* backgroundImage: AssetImage(
+                                    "assets/image/busw.jpg"), // NetworkImage(model.image), */ */
+
+                              CircleAvatar(
+                                backgroundColor: Color(0XFFFFAB4C),
+                                radius: 23,
+                                child: CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: 22,
+                                    child: IconButton(
+                                        icon: Icon(
+                                          Icons.call,
+                                          color: Color(0XFFFFAB4C),
+                                        ),
+                                        onPressed: () {
+                                          FlutterPhoneDirectCaller.callNumber(
+                                              "01550511745"); //model.phoneNumOfDriver
+                                        })),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "Abdo", // Text(model.name,style: TextStyle(fontSize: 15),)
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0XFFFFAB4C),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                        ), */

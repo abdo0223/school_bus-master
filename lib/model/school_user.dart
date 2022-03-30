@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class SchoolUserModel {
   bool isUpdated;
 
@@ -95,10 +93,10 @@ class SchoolProfileModel {
   }
 }
 
-class SocialChatModel {
+class SchoolChatModel {
   String senderId, receiverId, dateTime, text, receiverToken, image;
 
-  SocialChatModel(
+  SchoolChatModel(
       {this.dateTime,
       this.text,
       this.receiverId,
@@ -106,7 +104,7 @@ class SocialChatModel {
       this.receiverToken,
       this.image});
 
-  SocialChatModel.fromJson(Map<String, dynamic> json) {
+  SchoolChatModel.fromJson(Map<String, dynamic> json) {
     senderId = json['senderId'];
     receiverId = json['receiverId'];
     receiverToken = json['receiverToken'];
@@ -127,10 +125,10 @@ class SocialChatModel {
   }
 }
 
-class SocialUserModel {
+/* class SchoolUserModel {
   String name, email, phone, uId, image, bio, cover;
   bool isEmailVerified;
-  SocialUserModel(
+  SchoolUserModel(
       {this.uId,
       this.email,
       this.phone,
@@ -140,7 +138,7 @@ class SocialUserModel {
       this.bio,
       this.cover});
 
-  SocialUserModel.fromJson(Map<String, dynamic> json) {
+  SchoolUserModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     phone = json['phone'];
     email = json['email'];
@@ -164,3 +162,4 @@ class SocialUserModel {
     };
   }
 }
+ */

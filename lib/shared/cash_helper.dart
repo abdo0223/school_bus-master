@@ -40,7 +40,7 @@ class CacheHelper {
   }
 }
 
-class SocialDioHelper {
+class SchoolDioHelper {
   static Dio dio;
 
   static init() {
@@ -49,5 +49,37 @@ class SocialDioHelper {
         baseUrl: 'https://fcm.googleapis.com/fcm/',
       ),
     );
+  }
+
+  static Future<Response> postData({
+    @required String url,
+    String token,
+    String name,
+  }) async {
+    dio.options.headers = {
+      "to": "$token",
+      "notification": {
+        "title": "you have a message from ${name}",
+        "body": "testing body",
+        "sound": "default"
+      },
+      "android": {
+        "priority": "HIGH",
+        "notification": {
+          "notification_priority": "PRIORITY_MAX",
+          "sound": "default",
+          "default_sound": true,
+          "default_vibrate_timings": true,
+          "default_light_setting": true
+        }
+      },
+      "data": {
+        "type": "order",
+        "id": "87",
+        "click_action": "FLUTTER_NOTIFICATION_CLICK"
+      }
+    };
+
+    return dio.post(url);
   }
 }

@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:school_bus/helper/componanets.dart';
+import 'package:school_bus/helper/constants.dart';
 import 'package:school_bus/register.dart/cubit.dart';
 import 'package:school_bus/register.dart/state.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
-import 'package:school_bus/screen/chat/chatscreen.dart';
-import 'package:school_bus/screen/chat/chatyser.dart';
+import 'package:school_bus/screen/chat/chat_detail_sscreen.dart';
+import 'package:school_bus/screen/chat/chat_screen.dart';
+import 'package:school_bus/screen/sideBarMenu.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -79,13 +81,6 @@ class HomeScreen extends StatelessWidget {
                                                     fontSize: 40,
                                                   ),
                                                 ),
-                                                RaisedButton(
-                                                  onPressed: () {
-                                                    navigateTo(
-                                                        context, ChatsScreen());
-                                                  },
-                                                  child: Text("Chat"),
-                                                )
                                               ],
                                             ),
                                             Text(
@@ -278,6 +273,8 @@ class HomeScreen extends StatelessWidget {
                                                   builder: (context) =>
                                                       defaultButton(
                                                     function: () {
+                                                      /*  print("uid is ");
+                                                      print(userModel.uid); */
                                                       if (formKey.currentState
                                                           .validate()) {
                                                         if (state

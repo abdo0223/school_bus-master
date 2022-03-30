@@ -1,42 +1,46 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:school_bus/helper/constants.dart';
 import 'package:school_bus/model/school_user.dart';
+import 'package:school_bus/screen/chat/chatmodel.dart';
 import 'package:school_bus/shared/cash_helper.dart';
+import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
 
 import 'chatscreen_state.dart';
 
-class SocialCubit extends Cubit<SocialStates> {
-  SocialCubit() : super(SocialInitialState());
+class ChatCubit extends Cubit<SchoolState> {
+  ChatCubit() : super(SchoolInitialState());
 
-  static SocialCubit get(context) => BlocProvider.of(context);
+  static ChatCubit get(context) => BlocProvider.of(context);
 
-  SocialUserModel userModel;
+  SchoolUserModel userModel;
   void getUserData() {
-    emit(SocialLoadingState());
+    emit(SchoolLoadingState());
     uId = CacheHelper.getData(key: 'uId');
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
       print(value.data());
-      userModel = SocialUserModel.fromJson(value.data());
-      emit(SocialGetUserSuccessState());
+      userModel = SchoolUserModel.fromjson(value.data());
+      emit(SchoolGetUserSuccessState());
     }).catchError((onError) {
-      emit(SocialGetUserErrorState(onError.toString()));
+      emit(SchoolGetUserErrorState(onError.toString()));
     });
   }
 
-  List<SocialUserModel> users = [];
+  List<SchoolUserModel> users = [];
   void getUsers() {
-    emit(SocialGetUsersLoadingState());
+    if (users.length == 0) emit(SchoolGetUsersLoadingState());
     FirebaseFirestore.instance.collection('users').get().then((value) {
       value.docs.forEach((element) {
-        if (element.data()['uId'] != userModel.uId)
-          users.add(SocialUserModel.fromJson(element.data()));
+        if (element.data()['uId'] != userModel.uid)
+          users.add(SchoolUserModel.fromjson(element.data()));
       });
-      emit(SocialGetUsersSuccessState());
+      emit(SchoolGetUsersSuccessState());
     }).catchError((onError) {
-      emit(SocialGetPostsErrorState(onError.toString()));
+      emit(SchoolGetUserErrorState(onError.toString()));
     });
   }
 
@@ -45,23 +49,23 @@ class SocialCubit extends Cubit<SocialStates> {
     @required String dateTime,
     @required String text,
   }) {
-    SocialChatModel model = SocialChatModel(
+    MessageModel model = MessageModel(
         text: text,
-        senderId: userModel.uId,
+        senderId: userModel.uid,
         dateTime: dateTime,
         receiverId: receiverId);
     //Set My chats
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userModel.uId)
+        .doc(userModel.uid)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
         .add(model.toMap())
         .then((value) {
-      emit(SocialSendMessageSuccessState());
+      emit(SchoolSendMessageSuccessState());
     }).catchError((error) {
-      emit(SocialSendMessageErrorState());
+      emit(SchoolSendMessageErrorState());
     });
 
     //SET receiver CHAT
@@ -69,36 +73,89 @@ class SocialCubit extends Cubit<SocialStates> {
         .collection('users')
         .doc(receiverId)
         .collection('chats')
-        .doc(userModel.uId)
+        .doc(userModel.uid)
         .collection('messages')
         .add(model.toMap())
         .then((value) {
-      emit(SocialSendMessageSuccessState());
+      emit(SchoolSendMessageSuccessState());
     }).catchError((error) {
-      emit(SocialSendMessageErrorState());
+      emit(SchoolSendMessageErrorState());
     });
   }
 
-  List<SocialChatModel> messages = [];
+  List<SchoolChatModel> messages = [];
 
   void getMessages({
     @required String receiverId,
   }) {
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userModel.uId)
+        .doc(userModel.uid)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
-        .orderBy('dateTime')
-        .snapshots()
+        .orderBy('dateTime') //عشان ارتب الرسايل واخر رساله تبقي تحت
+        .snapshots() // عباره عن ستريم يعني بفتح ريل تايم
         .listen((event) {
       messages = [];
       event.docs.forEach((element) {
-        messages.add(SocialChatModel.fromJson(element.data()));
+        messages.add(SchoolChatModel.fromJson(element.data()));
       });
 
-      emit(SocialGetMessagesSuccessState());
+      emit(SchoolGetMessagesSuccessState());
     });
+  }
+
+  void userRegister({
+    @required String email,
+    @required String password,
+    @required String name,
+  }) {
+    print('dma');
+    print(email);
+    emit(SchoolRegisterLoadingState());
+
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    )
+        .then((value) {
+      print(value.user.email);
+      print(value.user.uid);
+
+      userCreate(name: name, email: email, uid: value.user.uid);
+    }).catchError((error) {
+      SchoolRegisterERRORState(error.toString());
+    });
+  }
+
+  void userCreate({
+    @required String email,
+    @required String name,
+    @required String uid,
+  }) {
+    SchoolUserModel registermodel =
+        SchoolUserModel(uid: uid, name: name, email: email, isUpdated: false);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(registermodel.uid)
+        .set(registermodel.toMap())
+        .then((value) {
+      emit(SchoolCreateSuccessState());
+    }).catchError((error) {
+      SchoolCreateERRORState(error.toString());
+    });
+  }
+
+  IconData suffix = Icons.visibility_outlined;
+  bool isPassword = true;
+
+  void changePasswordVisibility() {
+    isPassword = !isPassword;
+    suffix =
+        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+
+    emit(SchoolRegisterChangePasswordVisibiltyState());
   }
 }

@@ -1,117 +1,149 @@
-abstract class SocialStates {}
+abstract class SchoolState {}
 
-class SocialInitialState extends SocialStates {}
+class SchoolInitialState extends SchoolState {}
 
-class SocialLoadingState extends SocialStates {}
+class SchoolLoadingState extends SchoolState {}
 
-class SocialGetUserSuccessState extends SocialStates {}
+class SchoolGetUserSuccessState extends SchoolState {}
 
-class SocialGetUserErrorState extends SocialStates {
+class SchoolGetUserErrorState extends SchoolState {
   final String error;
 
-  SocialGetUserErrorState(this.error);
+  SchoolGetUserErrorState(this.error);
 }
 
-class SocialChangeBottomNavState extends SocialStates {}
+class SchoolChangeBottomNavState extends SchoolState {}
 
-class SocialNewPostState extends SocialStates {}
+class SchoolNewPostState extends SchoolState {}
 
-class SocialProfilePickedSuccessState extends SocialStates {}
+class SchoolProfilePickedSuccessState extends SchoolState {}
 
-class SocialProfilePickedErrorState extends SocialStates {}
+class SchoolProfilePickedErrorState extends SchoolState {}
 
-class SocialCoverPickedSuccessState extends SocialStates {}
+class SchoolCoverPickedSuccessState extends SchoolState {}
 
-class SocialCoverPickedErrorState extends SocialStates {}
+class SchoolCoverPickedErrorState extends SchoolState {}
 
-class SocialUploadProfileSuccessState extends SocialStates {}
+class SchoolUploadProfileSuccessState extends SchoolState {}
 
-class SocialUploadProfileErrorState extends SocialStates {}
+class SchoolUploadProfileErrorState extends SchoolState {}
 
-class SocialUploadCoverSuccessState extends SocialStates {}
+class SchoolUploadCoverSuccessState extends SchoolState {}
 
-class SocialUploadCoverErrorState extends SocialStates {}
+class SchoolUploadCoverErrorState extends SchoolState {}
 
-class SocialUpdateLoadingState extends SocialStates {}
+class SchoolUpdateLoadingState extends SchoolState {}
 
-class SocialUpdateSuccessState extends SocialStates {}
+class SchoolUpdateSuccessState extends SchoolState {}
 
-class SocialUpdateErrorState extends SocialStates {}
+class SchoolUpdateErrorState extends SchoolState {}
 
 //Post
-class SocialCreatePostLoadingState extends SocialStates {}
+class SchoolCreatePostLoadingState extends SchoolState {}
 
-class SocialCreatePostSuccessState extends SocialStates {}
+class SchoolCreatePostSuccessState extends SchoolState {}
 
-class SocialCreatePostErrorState extends SocialStates {}
+class SchoolCreatePostErrorState extends SchoolState {}
 
-class SocialPostImagePickedSuccessState extends SocialStates {}
+class SchoolPostImagePickedSuccessState extends SchoolState {}
 
-class SocialPostImagePickedErrorState extends SocialStates {}
+class SchoolPostImagePickedErrorState extends SchoolState {}
 
-class SocialRemovePickedState extends SocialStates {}
+class SchoolRemovePickedState extends SchoolState {}
 
-class SocialGetPostsLoadingState extends SocialStates {}
+class SchoolGetPostsLoadingState extends SchoolState {}
 
-class SocialGetPostsSuccessState extends SocialStates {}
+class SchoolGetPostsSuccessState extends SchoolState {}
 
-class SocialGetPostsErrorState extends SocialStates {
+class SchoolGetPostsErrorState extends SchoolState {
   final String error;
 
-  SocialGetPostsErrorState(this.error);
+  SchoolGetPostsErrorState(this.error);
 }
 
-class SocialLikePostsSuccessState extends SocialStates {}
+class SchoolLikePostsSuccessState extends SchoolState {}
 
-class SocialLikePostsErrorState extends SocialStates {
+class SchoolLikePostsErrorState extends SchoolState {
   final String error;
 
-  SocialLikePostsErrorState(this.error);
+  SchoolLikePostsErrorState(this.error);
 }
 
-class SocialWriteCommentSuccessState extends SocialStates {}
+class SchoolWriteCommentSuccessState extends SchoolState {}
 
-class SocialWriteCommentErrorState extends SocialStates {
+class SchoolWriteCommentErrorState extends SchoolState {
   final String error;
 
-  SocialWriteCommentErrorState(this.error);
+  SchoolWriteCommentErrorState(this.error);
 }
 
-class SocialGetCommentsPostsSuccessState extends SocialStates {}
+class SchoolGetCommentsPostsSuccessState extends SchoolState {}
 
-class SocialGetLengthCommentsPostsSuccessState extends SocialStates {}
+class SchoolGetLengthCommentsPostsSuccessState extends SchoolState {}
 
-class SocialDisLikePostsSuccessState extends SocialStates {}
+class SchoolDisLikePostsSuccessState extends SchoolState {}
 
-class SocialDisLikePostsErrorState extends SocialStates {
+class SchoolDisLikePostsErrorState extends SchoolState {
   final String error;
 
-  SocialDisLikePostsErrorState(this.error);
+  SchoolDisLikePostsErrorState(this.error);
 }
 
-class SocialGetLikePostsSuccessState extends SocialStates {}
+class SchoolGetLikePostsSuccessState extends SchoolState {}
 
 //users-Chats
 
-class SocialGetUsersLoadingState extends SocialStates {}
+class SchoolGetUsersLoadingState extends SchoolState {}
 
-class SocialGetUsersSuccessState extends SocialStates {}
+class SchoolGetUsersSuccessState extends SchoolState {}
 
-class SocialGetUsersErrorState extends SocialStates {}
+class SchoolGetUsersErrorState extends SchoolState {}
 
-class SocialSendMessageSuccessState extends SocialStates {}
+class SchoolSendMessageSuccessState extends SchoolState {}
 
-class SocialSendMessageErrorState extends SocialStates {}
+class SchoolSendMessageErrorState extends SchoolState {}
 
-class SocialGetMessagesSuccessState extends SocialStates {}
+class SchoolGetMessagesSuccessState extends SchoolState {}
 
-class SocialSignOutLoadingState extends SocialStates {}
+class SchoolSignOutLoadingState extends SchoolState {}
 
-class SocialSignOutSuccessState extends SocialStates {}
+class SchoolSignOutSuccessState extends SchoolState {}
 
-class SocialSignOutErrorState extends SocialStates {}
+class SchoolSignOutErrorState extends SchoolState {}
 
-class ChangerLoading extends SocialStates {}
+class ChangerLoading extends SchoolState {}
 
-class ChangerSuccessfully extends SocialStates {}
+class ChangerSuccessfully extends SchoolState {}
 ////////////////////////////////////////////////////////////////////////register
+
+class SchoolRegisterIntialState extends SchoolState {}
+
+class SchoolRegisterLoadingState extends SchoolState {}
+
+class SchoolRegisterSuccessState extends SchoolState {}
+
+class SchoolRegisterERRORState extends SchoolState {
+  final String error;
+  SchoolRegisterERRORState(this.error);
+}
+
+class SchoolCreateLoadingState extends SchoolState {}
+
+class SchoolCreateSuccessState extends SchoolState {}
+
+class SchoolCreateERRORState extends SchoolState {
+  final String error;
+  SchoolCreateERRORState(this.error);
+}
+
+class SchoolRegisterChangePasswordVisibiltyState extends SchoolState {}
+
+//////////////////////////////////
+class SchoolGetUseerLoadingState extends SchoolState {}
+
+class SchoolGetUseerSuccessState extends SchoolState {}
+
+class SchoolGetUseererrorState extends SchoolState {
+  final String error;
+  SchoolGetUseererrorState(this.error);
+}
