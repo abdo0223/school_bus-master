@@ -30,7 +30,7 @@ class SchoolRegisterCubit extends Cubit<SchoolRegisterState> {
       print(value.user.email);
       print(value.user.uid);
 
-      userCreate(name: name, email: email, uid: value.user.uid);
+      userCreate(name: name, email: email, uId: value.user.uid);
     }).catchError((error) {
       SchoolRegisterERRORState(error.toString());
     });
@@ -39,13 +39,13 @@ class SchoolRegisterCubit extends Cubit<SchoolRegisterState> {
   void userCreate({
     @required String email,
     @required String name,
-    @required String uid,
+    @required String uId,
   }) {
     SchoolUserModel registermodel =
-        SchoolUserModel(uid: uid, name: name, email: email, isUpdated: false);
+        SchoolUserModel(uId: uId, name: name, email: email, isUpdated: false);
     FirebaseFirestore.instance
         .collection('users')
-        .doc(registermodel.uid)
+        .doc(registermodel.uId)
         .set(registermodel.toMap())
         .then((value) {
       emit(SchoolCreateSuccessState());

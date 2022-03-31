@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:school_bus/page/favourites_page.dart';
-import 'package:school_bus/page/people_page.dart';
-import 'package:school_bus/page/user_page.dart';
+
 import 'package:school_bus/screen/chat/chat_screen.dart';
 import 'package:school_bus/screen/chat/cubit/chatscreen_cubit.dart';
 import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
 import 'package:school_bus/screen/contact_us.dart';
 import 'package:school_bus/screen/cubit/homeProfile.dart';
+import 'package:school_bus/screen/map_screen.dart';
 import 'package:school_bus/screen/profile_screen.dart';
 import 'package:school_bus/screen/setting_screen.dart';
 import 'package:school_bus/screen/wallet_screen.dart';

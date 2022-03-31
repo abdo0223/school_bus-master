@@ -111,7 +111,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     emit(SchoolLoginLoadingState());
 
     String email = FirebaseAuth.instance.currentUser.email;
-    String uid = FirebaseAuth.instance.currentUser.uid;
+    String uId = FirebaseAuth.instance.currentUser.uid;
     print(schoolName);
     print(schoollocation);
     print(email);
@@ -119,7 +119,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     print(childName);
 
     profileCreate(
-        uid: uid,
+        uId: uId,
         name: name,
         email: email,
         childName: childName,
@@ -138,7 +138,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     @required String phone,
     @required String email,
     @required String name,
-    @required String uid,
+    @required String uId,
     @required String profileImage,
   }) {
     SchoolUserModel profilemodel = SchoolUserModel(
@@ -151,11 +151,11 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         name: name,
         profileImage: profileImage ?? model.profileImage,
         isUpdated: true,
-        uid: uid);
+        uId: uId);
 
     FirebaseFirestore.instance
         .collection('users')
-        .doc(profilemodel.uid)
+        .doc(profilemodel.uId)
         .update(profilemodel.toMap())
         .then((value) {
       getUserData();

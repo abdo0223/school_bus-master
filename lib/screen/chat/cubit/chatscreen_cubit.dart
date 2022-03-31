@@ -35,7 +35,7 @@ class ChatCubit extends Cubit<SchoolState> {
     if (users.length == 0) emit(SchoolGetUsersLoadingState());
     FirebaseFirestore.instance.collection('users').get().then((value) {
       value.docs.forEach((element) {
-        if (element.data()['uId'] != userModel.uid)
+        if (element.data()['uId'] != userModel.uId)
           users.add(SchoolUserModel.fromjson(element.data()));
       });
       emit(SchoolGetUsersSuccessState());
@@ -51,13 +51,13 @@ class ChatCubit extends Cubit<SchoolState> {
   }) {
     MessageModel model = MessageModel(
         text: text,
-        senderId: userModel.uid,
+        senderId: userModel.uId,
         dateTime: dateTime,
         receiverId: receiverId);
     //Set My chats
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userModel.uid)
+        .doc(userModel.uId)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -73,7 +73,7 @@ class ChatCubit extends Cubit<SchoolState> {
         .collection('users')
         .doc(receiverId)
         .collection('chats')
-        .doc(userModel.uid)
+        .doc(userModel.uId)
         .collection('messages')
         .add(model.toMap())
         .then((value) {
@@ -90,7 +90,7 @@ class ChatCubit extends Cubit<SchoolState> {
   }) {
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userModel.uid)
+        .doc(userModel.uId)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -124,7 +124,7 @@ class ChatCubit extends Cubit<SchoolState> {
       print(value.user.email);
       print(value.user.uid);
 
-      userCreate(name: name, email: email, uid: value.user.uid);
+      userCreate(name: name, email: email, uId: value.user.uid);
     }).catchError((error) {
       SchoolRegisterERRORState(error.toString());
     });
@@ -133,13 +133,13 @@ class ChatCubit extends Cubit<SchoolState> {
   void userCreate({
     @required String email,
     @required String name,
-    @required String uid,
+    @required String uId,
   }) {
     SchoolUserModel registermodel =
-        SchoolUserModel(uid: uid, name: name, email: email, isUpdated: false);
+        SchoolUserModel(uId: uId, name: name, email: email, isUpdated: false);
     FirebaseFirestore.instance
         .collection('users')
-        .doc(registermodel.uid)
+        .doc(registermodel.uId)
         .set(registermodel.toMap())
         .then((value) {
       emit(SchoolCreateSuccessState());

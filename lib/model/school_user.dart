@@ -4,7 +4,7 @@ class SchoolUserModel {
   String name;
   String email;
   String phone;
-  String uid;
+  String uId;
   String profileImage;
   String childName;
   String chlildAddress;
@@ -16,7 +16,7 @@ class SchoolUserModel {
     this.email,
     this.name,
     this.phone,
-    this.uid,
+    this.uId,
     this.profileImage,
     this.childName,
     this.chlildAddress,
@@ -29,7 +29,7 @@ class SchoolUserModel {
       name = json['name'];
     }
     phone = json['phone'];
-    uid = json['uid'];
+    uId = json['uId'];
 
     profileImage = json['profileImage'];
     childName = json['childName'];
@@ -42,7 +42,7 @@ class SchoolUserModel {
       "name": name,
       "email": email,
       "phone": phone,
-      "uid": uid,
+      "uId": uId,
       "profileImage": profileImage,
       "childName": childName,
       "chlildAddress": chlildAddress,
@@ -54,7 +54,7 @@ class SchoolUserModel {
 
 class SchoolProfileModel {
   String phone;
-  String uid;
+  String uId;
   String image;
   String childName;
   String chlildAddress;
@@ -68,11 +68,11 @@ class SchoolProfileModel {
     this.chlildAddress,
     this.schoolName,
     this.schoollocation,
-    this.uid,
+    this.uId,
   });
   SchoolProfileModel.fromjson(Map<String, dynamic> json) {
     phone = json['phone'];
-    uid = json['uid'];
+    uId = json['uId'];
 
     image = json['image'];
     childName = json['childName'];
@@ -88,7 +88,7 @@ class SchoolProfileModel {
       "chlildAddress": chlildAddress,
       "schoolName": schoolName,
       "schoollocation": schoollocation,
-      "uid": uid,
+      "uId": uId,
     };
   }
 }
