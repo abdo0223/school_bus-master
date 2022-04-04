@@ -37,10 +37,11 @@ dependencies:
   flutter_signin_button: ^2.0.0
   flutter_svg: ^0.17.1
   fluttertoast: ^8.0.8
+  geolocator:
   google_maps_flutter: null
   image_picker: ^0.6.3
   shared_preferences: ^0.5.5
-  url_launcher:
+  url_launcher: null
 
 dev_dependencies:
   flutter_test:
