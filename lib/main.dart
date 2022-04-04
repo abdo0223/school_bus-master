@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                 canvasColor: Colors.white,
                 appBarTheme: AppBarTheme(
                   elevation: 0,
-                  color: Color(0XFFFFABC),
+                  color: Color(0XFFFFAB4C),
                 )),
             home: SchoolLoginScreen(),
           );
