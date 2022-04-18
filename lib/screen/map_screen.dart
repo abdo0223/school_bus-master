@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:school_bus/widget/info_driver_inMap.dart';
-import 'package:school_bus/widget/location_helper.dart';
+import 'package:school_bus_za/widget/location_helper.dart';
+
+import 'cubit/homeProfile.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key key}) : super(key: key);
@@ -71,7 +72,7 @@ class _MapScreenState extends State<MapScreen> {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-          InfoDriver()
+          //InfoDriver()
         ],
       ),
       floatingActionButton: Container(
@@ -79,9 +80,13 @@ class _MapScreenState extends State<MapScreen> {
         child: FloatingActionButton(
           //foregroundColor: Colors.black54,
           backgroundColor: Color(0XFFFFAB4C),
-          onPressed: _goToMyCurrentLocation,
+          onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            ));
+          },//_goToMyCurrentLocation,
           child: Icon(
-            Icons.place,
+            Icons.add,
             color: Colors.white,
           ),
         ),

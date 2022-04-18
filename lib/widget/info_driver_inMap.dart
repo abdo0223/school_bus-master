@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:school_bus/helper/componanets.dart';
-import 'package:school_bus/screen/chat/chat_detail_sscreen.dart';
-import 'package:school_bus/screen/chat/chat_screen.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_cubit.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
+import 'package:school_bus_za/helper/componanets.dart';
+import 'package:school_bus_za/screen/chat/chat_detail_sscreen.dart';
+import 'package:school_bus_za/screen/chat/chat_screen.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 
 class InfoDriver extends StatelessWidget {
   const InfoDriver({Key key}) : super(key: key);

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:school_bus/screen/map_screen.dart';
-import 'package:school_bus/widget/button_widget.dart';
-import 'package:school_bus/widget/navigation_drawer_widget.dart';
+import 'package:school_bus_za/screen/map_screen.dart';
+import 'package:school_bus_za/widget/button_widget.dart';
+import 'package:school_bus_za/widget/navigation_drawer_widget.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({Key key}) : super(key: key);

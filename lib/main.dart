@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:school_bus/network/dio_helper.dart';
+import 'package:school_bus_za/network/dio_helper.dart';
 
-import 'package:school_bus/screen/chat/cubit/chatscreen_cubit.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 
-import 'package:school_bus/screen/login.dart';
+import 'package:school_bus_za/screen/login.dart';
 
-import 'package:school_bus/shared/cash_helper.dart';
+import 'package:school_bus_za/shared/cash_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'screen/chat/cubit/chatscreen_cubit.dart';

@@ -4,11 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:school_bus/helper/constants.dart';
-import 'package:school_bus/model/school_user.dart';
-import 'package:school_bus/screen/chat/chatmodel.dart';
-import 'package:school_bus/shared/cash_helper.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
+import 'package:school_bus_za/helper/constants.dart';
+import 'package:school_bus_za/model/school_user.dart';
+import 'package:school_bus_za/screen/chat/chatmodel.dart';
+import 'package:school_bus_za/shared/cash_helper.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 
 import 'chatscreen_state.dart';
 

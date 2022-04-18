@@ -1,14 +1,14 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:school_bus/helper/componanets.dart';
-import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
-import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
-import 'package:school_bus/screen/chat/chat_screen.dart';
-import 'package:school_bus/screen/cubit/homeProfile.dart';
-import 'package:school_bus/screen/register_screen.dart';
-import 'package:school_bus/screen/sideBarMenu.dart';
-import 'package:school_bus/shared/cash_helper.dart';
+import 'package:school_bus_za/helper/componanets.dart';
+import 'package:school_bus_za/school_bus/cubit/schoollogin_cubit.dart';
+import 'package:school_bus_za/school_bus/cubit/schoollogin_state.dart';
+import 'package:school_bus_za/screen/chat/chat_screen.dart';
+import 'package:school_bus_za/screen/cubit/homeProfile.dart';
+import 'package:school_bus_za/screen/register_screen.dart';
+import 'package:school_bus_za/screen/sideBarMenu.dart';
+import 'package:school_bus_za/shared/cash_helper.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class SchoolLoginScreen extends StatelessWidget {

@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:school_bus/model/school_user.dart';
-import 'package:school_bus/register.dart/state.dart';
+import 'package:school_bus_za/model/school_user.dart';
+import 'package:school_bus_za/register.dart/state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SchoolRegisterCubit extends Cubit<SchoolRegisterState> {

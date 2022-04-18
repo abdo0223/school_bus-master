@@ -2,9 +2,9 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:school_bus/model/school_user.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_cubit.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
+import 'package:school_bus_za/model/school_user.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class ChatDetailsScreen extends StatelessWidget {

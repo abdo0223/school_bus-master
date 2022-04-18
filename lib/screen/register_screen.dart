@@ -2,18 +2,18 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:school_bus/register.dart/cubit.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_cubit.dart';
+import 'package:school_bus_za/register.dart/cubit.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
 
-import 'package:school_bus/helper/componanets.dart';
+import 'package:school_bus_za/helper/componanets.dart';
 
-import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
-import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
+import 'package:school_bus_za/school_bus/cubit/schoollogin_cubit.dart';
+import 'package:school_bus_za/school_bus/cubit/schoollogin_state.dart';
 
-import 'package:school_bus/screen/cubit/homeProfile.dart';
-import 'package:school_bus/screen/login.dart';
-import 'package:school_bus/screen/chat/cubit/chatscreen_state.dart';
-import 'package:school_bus/screen/sideBarMenu.dart';
+import 'package:school_bus_za/screen/cubit/homeProfile.dart';
+import 'package:school_bus_za/screen/login.dart';
+import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
+import 'package:school_bus_za/screen/sideBarMenu.dart';
 
 class SchoolRegisterScreen extends StatelessWidget {
   var nameController = TextEditingController();
@@ -41,7 +41,7 @@ class SchoolRegisterScreen extends StatelessWidget {
               child: Container(
                 height: size.height,
                 width: size.width,
-                color: Color(0XFFFFAB4C),
+                color: const Color(0XFFFFAB4C),
                 child: Form(
                   key: formKey,
                   child: Stack(

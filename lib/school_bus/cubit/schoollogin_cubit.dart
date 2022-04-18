@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,11 +8,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:school_bus/helper/constants.dart';
-import 'package:school_bus/model/school_user.dart';
-import 'package:school_bus/register.dart/state.dart';
-import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
-import 'package:school_bus/shared/cash_helper.dart';
+import 'package:school_bus_za/helper/constants.dart';
+import 'package:school_bus_za/model/school_user.dart';
+import 'package:school_bus_za/register.dart/state.dart';
+import 'package:school_bus_za/school_bus/cubit/schoollogin_state.dart';
+import 'package:school_bus_za/shared/cash_helper.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class SchoolLoginCubit extends Cubit<SchoolLoginState> {
@@ -99,15 +101,16 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
   }
 
 /////////////////////////////////////////////
-  void profileUbdate({
+  profileUbdate({
     @required String childName,
     @required String chlildAddress,
     @required String schoolName,
     @required String schoollocation,
     @required String phone,
     @required String name,
+    @required BuildContext ctx,
     String profileImage,
-  }) {
+  }) async{
     emit(SchoolLoginLoadingState());
 
     String email = FirebaseAuth.instance.currentUser.email;
@@ -118,7 +121,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     print(phone);
     print(childName);
 
-    profileCreate(
+    await profileCreate(
         uId: uId,
         name: name,
         email: email,
@@ -128,9 +131,11 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         schoolName: schoolName,
         profileImage: profileImageUrl,
         schoollocation: schoollocation);
+
+
   }
 
-  void profileCreate({
+  profileCreate({
     @required String childName,
     @required String chlildAddress,
     @required String schoolName,
@@ -140,7 +145,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     @required String name,
     @required String uId,
     @required String profileImage,
-  }) {
+  }) async{
     SchoolUserModel profilemodel = SchoolUserModel(
         childName: childName,
         chlildAddress: chlildAddress,
@@ -152,9 +157,9 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         profileImage: profileImage ?? model.profileImage,
         isUpdated: true,
         uId: uId);
-
-    FirebaseFirestore.instance
-        .collection('users')
+    
+    await FirebaseFirestore.instance
+        .collection('parents')
         .doc(profilemodel.uId)
         .update(profilemodel.toMap())
         .then((value) {
