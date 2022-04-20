@@ -1,0 +1,491 @@
+import 'package:conditional_builder/conditional_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:school_bus/helper/componanets.dart';
+import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
+import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
+import 'package:school_bus/screen/register_screen.dart';
+import 'package:school_bus/shared/cash_helper.dart';
+
+class SchoolLoginScreen extends StatelessWidget {
+  var formKey = GlobalKey<FormState>();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (BuildContext context) => SchoolLoginCubit(),
+      child: BlocConsumer<SchoolLoginCubit, SchoolLoginState>(
+        listener: (context, state) {
+          if (state is SchoolLoginSuccessState) {
+            print('akmff');
+          }
+        },
+        builder: (context, state) {
+           Size size = MediaQuery.of(context).size;
+          return Scaffold(
+            body: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'LOGIN',
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                                color: Colors.black,
+                              ),
+                        ),
+                        Text(
+                          'Login now to browse our hot offers',
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                color: Colors.grey,
+                              ),
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        defaultFormField(
+                          controller: emailController,
+                          type: TextInputType.emailAddress,
+                          validate: (String value) {
+                            if (value.isEmpty) {
+                              return 'please enter your email address';
+                            }
+                          },
+                          label: 'Email Address',
+                          prefix: Icons.email_outlined,
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        defaultFormField(
+                          controller: passwordController,
+                          type: TextInputType.visiblePassword,
+                          suffix: SchoolLoginCubit.get(context).suffix,
+                          onSubmit: (value) {
+                            if (formKey.currentState.validate()) {
+                              SchoolLoginCubit.get(context).userLogin(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                            }
+                          },
+                          isPassword: SchoolLoginCubit.get(context).isPassword,
+                          suffixPressed: () {
+                            SchoolLoginCubit.get(context)
+                                .changePasswordVisibility();
+                          },
+                          validate: (String value) {
+                            if (value.isEmpty) {
+                              return 'password is too short';
+                            }
+                          },
+                          label: 'Password',
+                          prefix: Icons.lock_outline,
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        ConditionalBuilder(
+                          condition: state is! SchoolLoginLoadingState,
+                          builder: (context) => defaultButton(
+                            function: () {
+                              if (formKey.currentState.validate()) {
+                                SchoolLoginCubit.get(context).userLogin(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                              }
+                            },
+                            text: 'login',
+                            isUpperCase: true,
+                          ),
+                          fallback: (context) =>
+                              Center(child: CircularProgressIndicator()),
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Don\'t have an account?',
+                            ),
+                            defaultTextButton(
+                              function: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SchoolRegisterScreen(),
+                                ));
+                              },
+                              text: 'register',
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+import 'package:conditional_builder/conditional_builder.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:school_bus/helper/componanets.dart';
+import 'package:school_bus/register.dart/cubit.dart';
+import 'package:school_bus/register.dart/state.dart';
+import 'package:school_bus/shared/cash_helper.dart';
+
+class SchoolRegisterScreen extends StatelessWidget {
+  var nameController = TextEditingController();
+
+  var emailController = TextEditingController();
+  var phoneController = TextEditingController();
+
+  var passwordController = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (BuildContext context) => SchoolRegisterCubit(),
+      child: BlocConsumer<SchoolRegisterCubit, SchoolRegisterState>(
+        listener: (context, state) {
+          if (state is SchoolRegisterSuccessState) {}
+        },
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(),
+            body: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'REGISTER',
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                                color: Colors.black,
+                              ),
+                        ),
+                        Text(
+                          'Register now to browse our hot offers',
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                color: Colors.grey,
+                              ),
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        defaultFormField(
+                          controller: nameController,
+                          type: TextInputType.name,
+                          validate: (String value) {
+                            if (value.isEmpty) {
+                              return 'please enter your name address';
+                            }
+                          },
+                          label: 'username',
+                          prefix: Icons.email_outlined,
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        defaultFormField(
+                          controller: emailController,
+                          type: TextInputType.emailAddress,
+                          validate: (String value) {
+                            if (value.isEmpty) {
+                              return 'please enter your email address';
+                            }
+                          },
+                          label: 'Email Address',
+                          prefix: Icons.person,
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        defaultFormField(
+                          controller: phoneController,
+                          type: TextInputType.phone,
+                          validate: (String value) {
+                            if (value.isEmpty) {
+                              return 'please enter your phone address';
+                            }
+                          },
+                          label: 'Phone',
+                          prefix: Icons.phone,
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        defaultFormField(
+                          controller: passwordController,
+                          type: TextInputType.visiblePassword,
+                          validate: (String value) {
+                            if (value.isEmpty) {
+                              return 'please enter your password address';
+                            }
+                          },
+                          label: 'Password',
+                          prefix: Icons.lock,
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        ConditionalBuilder(
+                          condition: state is! SchoolRegisterLoadingState,
+                          builder: (context) => defaultButton(
+                            function: () {
+                              if (formKey.currentState.validate()) {
+                                SchoolRegisterCubit.get(context).userRegister(
+                                  email: emailController.text,
+                                  name: passwordController.text,
+                                  phone: passwordController.text,
+                                  password: passwordController.text,
+                                );
+                              }
+                            },
+                            text: 'Register',
+                            isUpperCase: true,
+                          ),
+                          fallback: (context) =>
+                              Center(child: CircularProgressIndicator()),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+import 'package:conditional_builder/conditional_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:school_bus/helper/componanets.dart';
+import 'package:school_bus/register.dart/cubit.dart';
+import 'package:school_bus/register.dart/state.dart';
+import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
+import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
+
+class SchoolRegisterScreen extends StatelessWidget {
+  var nameController = TextEditingController();
+
+  var emailController = TextEditingController();
+  var phoneController = TextEditingController();
+
+  var passwordController = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (BuildContext context) => SchoolLoginCubit(),
+      child: BlocConsumer<SchoolLoginCubit, SchoolLoginState>(
+        listener: (context, state) {
+          if (state is SchoolLoginSuccessState) {
+            print('akmff');
+          }
+        },
+        builder: (context, state) {
+          Size size = MediaQuery.of(context).size;
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Container(
+                height: size.height,
+                width: size.width,
+                color: Color(0XFFFFAB4C),
+                child: Stack(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          height: size.height * .64,
+                          width: size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, top: 50),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 40),
+                                      width: size.height * .27,
+                                      height: size.height * .28,
+                                      child: Image.asset(
+                                        "assets/image/llogo.jpg",
+                                        fit: BoxFit.fill,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Register",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 40,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Create Your New Account",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: size.height * .45),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: size.height,
+                              width: size.width,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30),
+                                  )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40, left: 20),
+                              child: Column(
+                                children: [
+                                  defaultFormField(
+                                    controller: nameController,
+                                    type: TextInputType.name,
+                                    validate: (String value) {
+                                      if (value.isEmpty) {
+                                        return 'please enter your name address';
+                                      }
+                                    },
+                                    label: 'username',
+                                    prefix: Icons.email_outlined,
+                                  ),
+                                  SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  defaultFormField(
+                                    controller: emailController,
+                                    type: TextInputType.emailAddress,
+                                    validate: (String value) {
+                                      if (value.isEmpty) {
+                                        return 'please enter your email address';
+                                      }
+                                    },
+                                    label: 'Email Address',
+                                    prefix: Icons.person,
+                                  ),
+                                  SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  defaultFormField(
+                                    controller: phoneController,
+                                    type: TextInputType.phone,
+                                    validate: (String value) {
+                                      if (value.isEmpty) {
+                                        return 'please enter your phone address';
+                                      }
+                                    },
+                                    label: 'Phone',
+                                    prefix: Icons.phone,
+                                  ),
+                                  SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  defaultFormField(
+                                    controller: passwordController,
+                                    type: TextInputType.visiblePassword,
+                                    validate: (String value) {
+                                      if (value.isEmpty) {
+                                        return 'please enter your password address';
+                                      }
+                                    },
+                                    label: 'Password',
+                                    prefix: Icons.lock,
+                                  ),
+                                  SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  SizedBox(
+                                    height: 30.0,
+                                  ),
+                                  ConditionalBuilder(
+                                    condition:
+                                        state is! SchoolRegisterLoadingState,
+                                    builder: (context) => defaultButton(
+                                      function: () {
+                                        if (formKey.currentState.validate()) {
+                                          SchoolRegisterCubit.get(context)
+                                              .userRegister(
+                                            email: emailController.text,
+                                            name: passwordController.text,
+                                            phone: passwordController.text,
+                                            password: passwordController.text,
+                                          );
+                                        }
+                                      },
+                                      text: 'Register',
+                                      isUpperCase: true,
+                                    ),
+                                    fallback: (context) => Center(
+                                        child: CircularProgressIndicator()),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
