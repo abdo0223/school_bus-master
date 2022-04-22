@@ -6,7 +6,7 @@ import 'package:school_bus_za/screen/chat/chat_screen.dart';
 import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
 import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 import 'package:school_bus_za/screen/contact_us.dart';
-import 'package:school_bus_za/screen/cubit/homeProfile.dart';
+import 'package:school_bus_za/screen/homeProfile.dart';
 import 'package:school_bus_za/screen/find_bus.dart';
 import 'package:school_bus_za/screen/login.dart';
 import 'package:school_bus_za/screen/profile_screen.dart';

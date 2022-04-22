@@ -2,18 +2,16 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:school_bus_za/register.dart/cubit.dart';
-import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:school_bus_za/helper/componanets.dart';
-
 import 'package:school_bus_za/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus_za/school_bus/cubit/schoollogin_state.dart';
-
-import 'package:school_bus_za/screen/cubit/homeProfile.dart';
 import 'package:school_bus_za/screen/login.dart';
-import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 import 'package:school_bus_za/screen/sideBarMenu.dart';
+
+import 'chat/cubit/chatscreen_cubit.dart';
+import 'chat/cubit/chatscreen_state.dart';
 
 class SchoolRegisterScreen extends StatelessWidget {
   var nameController = TextEditingController();
@@ -166,33 +164,50 @@ class SchoolRegisterScreen extends StatelessWidget {
                                         height: 7.0,
                                       ),
                                       defaultFormField(
-                                        controller: passwordController,
-                                        type: TextInputType.visiblePassword,
-                                        validate: (String value) {
-                                          if (value.isEmpty) {
-                                            return 'please enter your password address';
-                                          }
-                                        },
-                                        label: 'Password',
-                                        prefix: Icons.lock,
-                                      ),
+                                          controller: passwordController,
+                                          type: TextInputType.visiblePassword,
+                                          suffix: SchoolLoginCubit.get(context)
+                                              .suffix,
+                                          validate: (String value) {
+                                            if (value.isEmpty) {
+                                              return 'please enter your password address';
+                                            }
+                                          },
+                                          label: 'Password',
+                                          prefix: Icons.lock,
+                                          isObsecured:
+                                              SchoolLoginCubit.get(context)
+                                                  .isPassword,
+                                          suffixPressed: () {
+                                            SchoolLoginCubit.get(context)
+                                                .changePasswordVisibility();
+                                          }),
                                       SizedBox(
                                         height: 7.0,
                                       ),
                                       defaultFormField(
-                                        controller: confirmPassword,
-                                        type: TextInputType.phone,
-                                        validate: (String value) {
-                                          if (value.isEmpty) {
-                                            return 'please enter your password again';
-                                          }
-                                          if (value != passwordController.text)
-                                            return 'Not Match';
-                                          return null;
-                                        },
-                                        label: 'confirmPassword',
-                                        prefix: Icons.phone,
-                                      ),
+                                          controller: confirmPassword,
+                                          type: TextInputType.visiblePassword,
+                                          suffix: SchoolLoginCubit.get(context)
+                                              .suffixx,
+                                          validate: (String value) {
+                                            if (value.isEmpty) {
+                                              return 'please enter your password again';
+                                            }
+                                            if (value !=
+                                                passwordController.text)
+                                              return 'Not Match';
+                                            return null;
+                                          },
+                                          label: 'confirmPassword',
+                                          prefix: Icons.lock_outline_sharp,
+                                          isObsecured:
+                                              SchoolLoginCubit.get(context)
+                                                  .isConfirm,
+                                          suffixPressed: () {
+                                            SchoolLoginCubit.get(context)
+                                                .confirmPasswordVisibility();
+                                          }),
                                       SizedBox(
                                         height: 7.0,
                                       ),
@@ -206,11 +221,6 @@ class SchoolRegisterScreen extends StatelessWidget {
                                           function: () {
                                             if (formKey.currentState
                                                 .validate()) {
-                                              if (state
-                                                  is SchoolCreateSuccessState) {
-                                                navigateAndFinish(
-                                                    context, SideBar());
-                                              }
                                               ChatCubit.get(context)
                                                   .userRegister(
                                                 email: emailController.text,
@@ -218,6 +228,41 @@ class SchoolRegisterScreen extends StatelessWidget {
                                                 password:
                                                     passwordController.text,
                                               );
+                                            }
+                                            if (formKey.currentState
+                                                .validate()) {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text("Success"),
+                                                      titleTextStyle: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                          fontSize: 20),
+                                                      backgroundColor:
+                                                          Color(0XFFFFAB4C),
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          20))),
+                                                      content: Text(
+                                                        "Save successfully",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    );
+                                                  });
+                                            }
+                                            if (state
+                                                is SchoolCreateSuccessState) {
+                                              navigateAndFinish(
+                                                  context, SideBar());
                                             }
                                           },
                                           text: 'Create Account ',
@@ -247,11 +292,19 @@ class SchoolRegisterScreen extends StatelessWidget {
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              Navigator.of(context).pushReplacement(
-                                                  MaterialPageRoute(
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          SchoolLoginScreen()));
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                    type: PageTransitionType
+                                                        .rightToLeftWithFade,
+                                                    duration: Duration(
+                                                        milliseconds: 800),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 800),
+                                                    child: SchoolLoginScreen(),
+                                                    inheritTheme: true,
+                                                    ctx: context),
+                                              );
                                             },
                                             child: Column(
                                               children: [
