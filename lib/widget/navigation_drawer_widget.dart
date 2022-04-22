@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:school_bus_za/helper/componanets.dart';
 
 import 'package:school_bus_za/screen/chat/chat_screen.dart';
@@ -101,8 +102,18 @@ class NavigationDrawerWidget extends StatelessWidget {
                             buildMenuItem(
                                 text: 'Logout',
                                 icon: Icons.logout,
-                                onClicked: () => navigateAndFinish(
-                                    context, SchoolLoginScreen())),
+                                onClicked: () => Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.bottomToTop,
+                                          duration:
+                                              Duration(milliseconds: 1100),
+                                          reverseDuration:
+                                              Duration(milliseconds: 1100),
+                                          child: SchoolLoginScreen(),
+                                          inheritTheme: true,
+                                          ctx: context),
+                                    )),
                           ],
                         ),
                       ),
