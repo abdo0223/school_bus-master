@@ -86,7 +86,7 @@ class SchoolLoginScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Hello Parent!",
+                                          "Hello Parent",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 40,
