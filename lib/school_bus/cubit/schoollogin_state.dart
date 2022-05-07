@@ -17,6 +17,8 @@ class SchoolLoginERRORState extends SchoolLoginState {
 
 class SchoolChangePasswordVisibiltyState extends SchoolLoginState {}
 
+class SchoolConfirmPasswordVisibiltyState extends SchoolLoginState {}
+
 class SchoolProfileImagePickedSuccessState extends SchoolLoginState {}
 
 class SchoolProfileImagePickedErrorState extends SchoolLoginState {}

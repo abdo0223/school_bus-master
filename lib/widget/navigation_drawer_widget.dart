@@ -1,96 +1,138 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:school_bus_za/helper/componanets.dart';
 
 import 'package:school_bus_za/screen/chat/chat_screen.dart';
 import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
 import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 import 'package:school_bus_za/screen/contact_us.dart';
-import 'package:school_bus_za/screen/cubit/homeProfile.dart';
-import 'package:school_bus_za/screen/map_screen.dart';
+import 'package:school_bus_za/screen/homeProfile.dart';
+import 'package:school_bus_za/screen/find_bus.dart';
+import 'package:school_bus_za/screen/login.dart';
 import 'package:school_bus_za/screen/profile_screen.dart';
 import 'package:school_bus_za/screen/setting_screen.dart';
 import 'package:school_bus_za/screen/wallet_screen.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
+
+  NavigationDrawerWidget({Key key, @required this.name,
+    @required this.urlImage}) : super(key: key);
+  final String name;
+  final String urlImage;
   @override
   Widget build(BuildContext context) {
-    final name = 'abdo ali';
-    final email = 'ali@gmail.com';
+    /*
+    final name = FirebaseFirestore.instance.collection('parents').doc(
+      FirebaseAuth.instance.currentUser.uid).get().then((value) => value.get('name'));
+    final email = FirebaseAuth.instance.currentUser.email;
     final urlImage = 'assets/image/abdo.jpg';
+
+     */
+
 
     return BlocConsumer<ChatCubit, SchoolState>(
       listener: (context, state) {},
       builder: (context, state) {
         var model = ChatCubit.get(context).userModel;
 
-        return Drawer(
-          child: Material(
-            color: Color(0XFFFFAB4C),
-            child: ListView(
-              children: <Widget>[
-                buildHeader(
-                  urlImage: /* model.profileImage */ urlImage,
-                  name: /* model.name */ name,
-                  email: email /* model.email */,
-                  onClicked: () => null
-                ),
-                Container(
-                  padding: padding,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 12),
-                      //  buildSearchField(),
-                      const SizedBox(height: 24),
-                      buildMenuItem(
-                        text: 'Find School Bus',
-                        icon: Icons.location_pin,
-                        onClicked: () => selectedItem(context, 0),
-                      ),
-                      const SizedBox(height: 16),
-                      buildMenuItem(
-                        text: 'Call Driver',
-                        icon: Icons.call,
-                        onClicked: () => selectedItem(context, 1),
-                      ),
-                      const SizedBox(height: 16),
-                      buildMenuItem(
-                        text: 'Add Child',
-                        icon: Icons.child_care,
-                        onClicked: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => HomeScreen(),
-                        )),
-                      ),
-                      const SizedBox(height: 16),
-                      buildMenuItem(
-                        text: 'Wallet',
-                        icon: Icons.money,
-                        onClicked: () => selectedItem(context, 2),
-                      ),
-                      const SizedBox(height: 16),
-                      buildMenuItem(
-                        text: 'Profile',
-                        icon: Icons.person,
-                        onClicked: () => selectedItem(context, 3),
-                      ),
-                      const SizedBox(height: 24),
-                      Divider(color: Colors.white70),
-                      const SizedBox(height: 24),
-                      buildMenuItem(
-                        text: 'Settings',
-                        icon: Icons.settings,
-                        onClicked: () => selectedItem(context, 4),
-                      ),
-                      const SizedBox(height: 16),
-                      buildMenuItem(
-                        text: 'Contact Us',
-                        icon: Icons.quick_contacts_mail_rounded,
-                        onClicked: () => selectedItem(context, 5),
+        return SafeArea(
+          child: Container(
+            height: MediaQuery.of(context).size.height - 110,
+            // margin: EdgeInsets.only(
+            //   top: 30,
+            //   bottom: 30,
+            // ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(35),
+                  bottomRight: Radius.circular(35)),
+              child: Drawer(
+                child: Material(
+                  color: Color(0XFFFFAB4C),
+                  child: ListView(
+                    children: <Widget>[
+                      buildHeader(
+                          urlImage: /* model.profileImage */ urlImage,
+                          name: /* model.name */ name,
+                          email: FirebaseAuth.instance.currentUser.email /* model.email */,
+                          onClicked: () {}),
+                      Container(
+                        padding: padding,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 0),
+                            //  buildSearchField(),
+                            const SizedBox(height: 8),
+                            buildMenuItem(
+                                text: 'Add Child',
+                                icon: Icons.child_care,
+                                onClicked: () => Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => HomeScreen(),
+                                    ))),
+                            buildMenuItem(
+                              text: 'Find School Bus',
+                              icon: Icons.location_pin,
+                              onClicked: () => selectedItem(context, 0),
+                            ),
+                            const SizedBox(height: 8),
+                            buildMenuItem(
+                              text: 'Call Driver',
+                              icon: Icons.call,
+                              onClicked: () => selectedItem(context, 1),
+                            ),
+                            const SizedBox(height: 8),
+                            buildMenuItem(
+                              text: 'Wallet',
+                              icon: Icons.money,
+                              onClicked: () => selectedItem(context, 2),
+                            ),
+                            const SizedBox(height: 8),
+                            buildMenuItem(
+                              text: 'Profile',
+                              icon: Icons.person,
+                              onClicked: () => selectedItem(context, 3),
+                            ),
+                            const SizedBox(height: 10),
+                            Divider(color: Colors.white70),
+                            const SizedBox(height: 8),
+                            buildMenuItem(
+                              text: 'Settings',
+                              icon: Icons.settings,
+                              onClicked: () => selectedItem(context, 4),
+                            ),
+                            const SizedBox(height: 8),
+                            buildMenuItem(
+                              text: 'Contact Us',
+                              icon: Icons.quick_contacts_mail_rounded,
+                              onClicked: () => selectedItem(context, 5),
+                            ),
+                            buildMenuItem(
+                                text: 'Logout',
+                                icon: Icons.logout,
+                                onClicked: () => Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.bottomToTop,
+                                          duration:
+                                              Duration(milliseconds: 1100),
+                                          reverseDuration:
+                                              Duration(milliseconds: 1100),
+                                          child: SchoolLoginScreen(),
+                                          inheritTheme: true,
+                                          ctx: context),
+                                    )),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         );
@@ -110,7 +152,7 @@ class NavigationDrawerWidget extends StatelessWidget {
           padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
           child: Row(
             children: [
-              CircleAvatar(radius: 30, backgroundImage: AssetImage(urlImage)),
+              CircleAvatar(radius: 30, backgroundImage: NetworkImage(urlImage)),
               SizedBox(width: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +225,7 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MapScreen(),
+          builder: (context) => FindBus(),
         ));
         break;
       case 1:
@@ -203,12 +245,12 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
       case 4:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => SettingScreeen(),
+          builder: (context) => SettingsScreen(),
         ));
         break;
       case 5:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ContactUsScreen(),
+          builder: (context) => AboutUsScreen(),
         ));
     }
   }

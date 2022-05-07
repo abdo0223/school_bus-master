@@ -63,6 +63,21 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     emit(SchoolChangePasswordVisibiltyState());
   }
 
+  IconData suffixx = Icons.visibility_outlined;
+
+  bool isConfirm = true;
+
+  void confirmPasswordVisibility() {
+    isConfirm = !isConfirm;
+    suffixx =
+        isConfirm ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    emit(SchoolConfirmPasswordVisibiltyState());
+
+    suffixx =
+        isConfirm ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    emit(SchoolConfirmPasswordVisibiltyState());
+  }
+
   File profileImage;
   var picker = ImagePicker();
 
@@ -110,7 +125,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     @required String name,
     @required BuildContext ctx,
     String profileImage,
-  }) async{
+  }) async {
     emit(SchoolLoginLoadingState());
 
     String email = FirebaseAuth.instance.currentUser.email;
@@ -131,8 +146,6 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         schoolName: schoolName,
         profileImage: profileImageUrl,
         schoollocation: schoollocation);
-
-
   }
 
   profileCreate({
@@ -145,7 +158,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     @required String name,
     @required String uId,
     @required String profileImage,
-  }) async{
+  }) async {
     SchoolUserModel profilemodel = SchoolUserModel(
         childName: childName,
         chlildAddress: chlildAddress,
@@ -157,7 +170,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         profileImage: profileImage ?? model.profileImage,
         isUpdated: true,
         uId: uId);
-    
+
     await FirebaseFirestore.instance
         .collection('parents')
         .doc(profilemodel.uId)

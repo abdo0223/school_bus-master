@@ -1,24 +1,21 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:school_bus_za/widget/info_driver_inMap.dart';
 import 'package:school_bus_za/widget/location_helper.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({Key key}) : super(key: key);
+class FindBus extends StatefulWidget {
+  const FindBus({Key key}) : super(key: key);
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<FindBus> createState() => _FindBusState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _FindBusState extends State<FindBus> {
   FloatingSearchBarController controller = FloatingSearchBarController();
   Completer<GoogleMapController> _controller = Completer();
   static Position position;
@@ -38,29 +35,10 @@ class _MapScreenState extends State<MapScreen> {
       setState(() {});
     });
   }
-  String driverName;
-  String driverImage;
-  String carType;
-  String phoneNumber;
-  
-  Future _getDriverDetails() async{
-    await FirebaseFirestore.instance.collection('drivers').doc(
-      'o6OU71joT5XjDalgogPRLbYrZl22').get().then((value) {
-        setState(() {
-          driverName = value.get('name');
-          driverImage = value.get('profile_pic');
-          carType = value.get('car_type');
-          phoneNumber = value.get('mobile');
-        });
-    });
-  }
 
   void initState() {
     super.initState();
     getMyCurrentLocation();
-    Future.delayed(Duration.zero, () async{
-      await _getDriverDetails();
-    });
   }
 
   ////////////////////
@@ -147,16 +125,11 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
           //buildFloatingSearchBar(),
-          InfoDriver(
-            carType: carType,
-            driverName: driverName,
-            driverPic: driverImage,
-            number: phoneNumber,
-          )
+          // InfoDriver()
         ],
       ),
       floatingActionButton: Container(
-        margin: EdgeInsets.fromLTRB(0, 0, 8, 180),
+        margin: EdgeInsets.fromLTRB(0, 0, 8, 20),
         child: FloatingActionButton(
           //foregroundColor: Colors.black54,
           backgroundColor: Color(0XFFFFAB4C),

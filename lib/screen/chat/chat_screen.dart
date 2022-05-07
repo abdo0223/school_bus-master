@@ -69,7 +69,7 @@ class ChatsScreen extends StatelessWidget {
               separatorBuilder: (context, index) => SizedBox(
                 height: 16.0,
               ),
-              itemCount: 2,
+              itemCount: 1,
             ),
           ),
           SizedBox(
@@ -143,7 +143,7 @@ Widget buildChatitem(/* SchoolUserModel model, */ context) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Abdo Ali",
+                    "Ahmed Gamal",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headline6,
@@ -184,7 +184,7 @@ Widget buildChatitem(/* SchoolUserModel model, */ context) {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
-            6.0,
+            8.0,
           ),
           color: Colors.white,
         ),

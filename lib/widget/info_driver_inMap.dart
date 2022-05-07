@@ -1,14 +1,23 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:school_bus_za/helper/componanets.dart';
 import 'package:school_bus_za/screen/chat/chat_detail_sscreen.dart';
-import 'package:school_bus_za/screen/chat/chat_screen.dart';
+
 import 'package:school_bus_za/screen/chat/cubit/chatscreen_cubit.dart';
 import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
+import 'package:school_bus_za/screen/chat_z/chat_z_screen.dart';
 
 class InfoDriver extends StatelessWidget {
-  const InfoDriver({Key key}) : super(key: key);
+  const InfoDriver({Key key, @required this.driverName,
+  @required this.carType, @required this.driverPic, @required this.number}) : super(key: key);
+  final String driverName;
+  final String driverPic;
+  final String carType;
+  final String number;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +36,11 @@ class InfoDriver extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 28.0,
-                        backgroundImage: AssetImage("assets/image/abdo.jpg"),
+                        backgroundImage: NetworkImage(driverPic),
                         backgroundColor: Colors.transparent,
                       ),
                       Text(
-                        "Ahmed Gamal",
+                        driverName,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -48,8 +57,7 @@ class InfoDriver extends StatelessWidget {
                                   color: Color(0XFFFFAB4C),
                                 ),
                                 onPressed: () {
-                                  FlutterPhoneDirectCaller.callNumber(
-                                      "01550511745"); //model.phoneNumOfDriver
+                                  FlutterPhoneDirectCaller.callNumber(number); //model.phoneNumOfDriver
                                 }),
                           ),
                           SizedBox(
@@ -66,7 +74,7 @@ class InfoDriver extends StatelessWidget {
                                   color: Color(0XFFFFAB4C),
                                 ),
                                 onPressed: () {
-                                  navigateTo(context, ChatDetailsScreen());
+                                  navigateTo(context, ChatScreen(driverUid: 'o6OU71joT5XjDalgogPRLbYrZl22'));
                                 }),
                           ),
                         ],
@@ -85,7 +93,7 @@ class InfoDriver extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                       ),
                       Text(
-                        "Toyota S7",
+                        carType,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),

@@ -1,11 +1,12 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:school_bus_za/helper/componanets.dart';
 import 'package:school_bus_za/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus_za/school_bus/cubit/schoollogin_state.dart';
 import 'package:school_bus_za/screen/chat/chat_screen.dart';
-import 'package:school_bus_za/screen/cubit/homeProfile.dart';
+import 'package:school_bus_za/screen/homeProfile.dart';
 import 'package:school_bus_za/screen/register_screen.dart';
 import 'package:school_bus_za/screen/sideBarMenu.dart';
 import 'package:school_bus_za/shared/cash_helper.dart';
@@ -77,26 +78,29 @@ class SchoolLoginScreen extends StatelessWidget {
                                       )
                                     ],
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Hello Parent!",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
+                                  SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Hello Parent",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 40,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "Sign in To continue",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
+                                        Text(
+                                          "Sign in To continue",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
@@ -113,7 +117,7 @@ class SchoolLoginScreen extends StatelessWidget {
                               Container(
                                 height: size.height,
                                 width: size.width,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(30),
@@ -125,148 +129,171 @@ class SchoolLoginScreen extends StatelessWidget {
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 40, left: 20),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 30),
-                                      child: defaultFormField(
-                                        controller: emailController,
-                                        type: TextInputType.emailAddress,
-                                        validate: (String value) {
-                                          if (value.isEmpty) {
-                                            return 'please enter your email address';
-                                          }
-                                        },
-                                        label: 'Email Address',
-                                        prefix: Icons.email_outlined,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 30),
+                                        child: defaultFormField(
+                                          controller: emailController,
+                                          type: TextInputType.emailAddress,
+                                          validate: (String value) {
+                                            if (value.isEmpty) {
+                                              return 'please enter your email address';
+                                            }
+                                          },
+                                          label: 'Email Address',
+                                          prefix: Icons.email_outlined,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: size.height * .02,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 30),
-                                      child: defaultFormField(
-                                        controller: passwordController,
-                                        type: TextInputType.visiblePassword,
-                                        suffix: SchoolLoginCubit.get(context)
-                                            .suffix,
-                                        onSubmit: (value) {
-                                          if (formKey.currentState.validate()) {
-                                            SchoolLoginCubit.get(context)
-                                                .userLogin(
-                                              email: emailController.text,
-                                              password: passwordController.text,
-                                            );
-                                          }
-                                        },
-                                        isObsecured:
-                                            SchoolLoginCubit.get(context)
-                                                .isPassword,
-                                        suffixPressed: () {
-                                          SchoolLoginCubit.get(context)
-                                              .changePasswordVisibility();
-                                        },
-                                        validate: (String value) {
-                                          if (value.isEmpty) {
-                                            return 'password is too short';
-                                          }
-                                        },
-                                        label: 'Password',
-                                        prefix: Icons.lock_outline,
+                                      SizedBox(
+                                        height: size.height * .02,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 30.0,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 28),
-                                      child: Padding(
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 30),
+                                        child: defaultFormField(
+                                          controller: passwordController,
+                                          type: TextInputType.visiblePassword,
+                                          suffix: SchoolLoginCubit.get(context)
+                                              .suffix,
+                                          onSubmit: (value) {
+                                            if (formKey.currentState
+                                                .validate()) {
+                                              SchoolLoginCubit.get(context)
+                                                  .userLogin(
+                                                email: emailController.text,
+                                                password:
+                                                    passwordController.text,
+                                              );
+                                            }
+                                          },
+                                          isObsecured:
+                                              SchoolLoginCubit.get(context)
+                                                  .isPassword,
+                                          suffixPressed: () {
+                                            SchoolLoginCubit.get(context)
+                                                .changePasswordVisibility();
+                                          },
+                                          validate: (String value) {
+                                            if (value.isEmpty) {
+                                              return 'password is too short';
+                                            }
+                                          },
+                                          label: 'Password',
+                                          prefix: Icons.lock_outline,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 30.0,
+                                      ),
+                                      Padding(
                                         padding:
                                             const EdgeInsets.only(right: 28),
-                                        child: ConditionalBuilder(
-                                          condition:
-                                              state is! SchoolLoginLoadingState,
-                                          builder: (context) => defaultButton(
-                                            function: () {
-                                              if (state
-                                                  is SchoolLoginSuccessState) {
-                                                navigateAndFinish(
-                                                    context, SideBar());
-                                              }
-                                              if (formKey.currentState
-                                                  .validate()) {
-                                                SchoolLoginCubit.get(context)
-                                                    .userLogin(
-                                                  email: emailController.text,
-                                                  password:
-                                                      passwordController.text,
-                                                );
-                                              }
-                                            },
-                                            text: 'login',
-                                            isUpperCase: true,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 28),
+                                          child: ConditionalBuilder(
+                                            condition: state
+                                                is! SchoolLoginLoadingState,
+                                            builder: (context) => defaultButton(
+                                              function: () {
+                                                if (state
+                                                    is SchoolLoginSuccessState) {
+                                                  navigateAndFinish(
+                                                      context, SideBar());
+                                                }
+                                                if (formKey.currentState
+                                                    .validate()) {
+                                                  SchoolLoginCubit.get(context)
+                                                      .userLogin(
+                                                    email: emailController.text,
+                                                    password:
+                                                        passwordController.text,
+                                                  );
+                                                }
+                                              },
+                                              text: 'login',
+                                              isUpperCase: true,
+                                            ),
+                                            fallback: (context) => Center(
+                                                child: Text(
+                                              "Pssword OR Email Incorrect",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  color: Colors.red),
+                                            )),
                                           ),
-                                          fallback: (context) => Center(
-                                              child:
-                                                  CircularProgressIndicator()),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 15.0,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Don\'t have an account?',
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            SchoolRegisterScreen()));
-                                              },
-                                              child: Text(
-                                                "SIGN UP",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0XFFFFAB4C),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                      SizedBox(
+                                        height: 15.0,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Don\'t have an account?',
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "OR",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        SignInButton(
-                                          Buttons.Google,
-                                          onPressed: () {
-                                            _showButtonPressDialog(
-                                                context, 'Google');
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .leftToRightWithFade,
+                                                        duration: Duration(
+                                                            milliseconds: 1000),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    1000),
+                                                        child:
+                                                            SchoolRegisterScreen(),
+                                                        inheritTheme: true,
+                                                        ctx: context),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  "SIGN UP",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Color(0XFFFFAB4C),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "OR",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          SignInButton(
+                                            Buttons.Google,
+                                            onPressed: () {
+                                              _showButtonPressDialog(
+                                                  context, 'Google');
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

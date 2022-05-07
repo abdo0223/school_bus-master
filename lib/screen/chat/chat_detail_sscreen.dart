@@ -76,7 +76,7 @@ class ChatDetailsScreen extends StatelessWidget {
                                       width: 15,
                                     ),
                                     Text(
-                                      "Abdo", // Text(model.name,style: TextStyle(fontSize: 15),)
+                                      "Ahmed", // Text(model.name,style: TextStyle(fontSize: 15),)
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Color(0XFFFFAB4C),
