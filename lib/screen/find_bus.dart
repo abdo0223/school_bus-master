@@ -1,145 +1,106 @@
-import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:school_bus_za/widget/location_helper.dart';
+
+
+
+
 
 class FindBus extends StatefulWidget {
+
   const FindBus({Key key}) : super(key: key);
+
 
   @override
   State<FindBus> createState() => _FindBusState();
 }
 
 class _FindBusState extends State<FindBus> {
-  FloatingSearchBarController controller = FloatingSearchBarController();
-  Completer<GoogleMapController> _controller = Completer();
-  static Position position;
-  static final CameraPosition _myCurrentLocation = CameraPosition(
-    bearing: 0.0,
-    target: LatLng(
-      position.latitude,
-      position.longitude,
-    ),
-    tilt: 0.0,
-    zoom: 17,
-  );
 
-  Future<void> getMyCurrentLocation() async {
-    await LocationHelper.getCurrentLocation();
-    position = await Geolocator.getLastKnownPosition().whenComplete(() {
-      setState(() {});
-    });
-  }
+  List <Marker> myMarker = [];
+  GoogleMapController mapController;
+  double lat;
+  double long;
 
+
+
+  @override
+  // ignore: must_call_super
   void initState() {
     super.initState();
-    getMyCurrentLocation();
+    Future.delayed(Duration.zero, () async{
+      print('LOOOL');
+      await FirebaseFirestore.instance.collection('drivers').doc(
+          'o6OU71joT5XjDalgogPRLbYrZl22').get().then((value) {
+        setState(() {
+          lat= double.parse(value.get('latitude'));
+          long = double.parse(value.get('longitude'));
+        });
+      });
+
+    });
+
   }
 
-  ////////////////////
-  Widget buildMap() {
-    return GoogleMap(
-      mapType: MapType.normal,
-      myLocationEnabled: true,
-      zoomControlsEnabled: false,
-      myLocationButtonEnabled: false,
-      initialCameraPosition: _myCurrentLocation,
-      onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
-      },
-    );
-  }
-
-  Future<void> _goToMyCurrentLocation() async {
-    final GoogleMapController controller = await _controller.future;
-    controller
-        .animateCamera(CameraUpdate.newCameraPosition(_myCurrentLocation));
-  }
-
-  Widget buildFloatingSearchBar() {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
-    return FloatingSearchBar(
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [],
-          ),
-        );
-      },
-      controller: controller,
-      elevation: 6,
-      hintStyle: TextStyle(fontSize: 18),
-      queryStyle: TextStyle(fontSize: 18),
-      hint: "Find a Place..",
-      border: BorderSide(style: BorderStyle.none),
-      margins: EdgeInsets.fromLTRB(20, 70, 20, 0),
-      padding: EdgeInsets.fromLTRB(20, 0, 2, 0),
-      height: 52,
-      iconColor: Color(0XFFFFAB4C),
-      scrollPadding: EdgeInsets.only(top: 16, bottom: 56),
-      transitionDuration: const Duration(milliseconds: 600),
-      transitionCurve: Curves.easeInOut,
-      physics: const BouncingScrollPhysics(),
-      axisAlignment: isPortrait ? 0.0 : -1.0,
-      openAxisAlignment: 0.0,
-      width: isPortrait ? 600 : 500,
-      debounceDelay: const Duration(microseconds: 500),
-      onQueryChanged: (query) {},
-      onFocusChanged: (_) {},
-      transition: CircularFloatingSearchBarTransition(),
-      actions: [
-        FloatingSearchBarAction(
-          showIfOpened: false,
-          child: CircularButton(
-            icon: Icon(
-              Icons.place,
-              color: Color(0XFFFFAB4C),
-            ),
-            onPressed: () {},
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          position != null
-              ? buildMap()
-              : Center(
-                  child: Container(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-          //buildFloatingSearchBar(),
-          // InfoDriver()
-        ],
-      ),
-      floatingActionButton: Container(
-        margin: EdgeInsets.fromLTRB(0, 0, 8, 20),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 20),
         child: FloatingActionButton(
-          //foregroundColor: Colors.black54,
-          backgroundColor: Color(0XFFFFAB4C),
-          onPressed: _goToMyCurrentLocation,
-          child: Icon(
-            Icons.place,
-            color: Colors.white,
-          ),
+          child: Icon(Icons.refresh),
+          backgroundColor: Colors.black,
+          onPressed: () async{
+            await FirebaseFirestore.instance.collection('drivers').doc(
+                'o6OU71joT5XjDalgogPRLbYrZl22').get().then((value) {
+              setState(() {
+                lat= double.parse(value.get('latitude'));
+                long = double.parse(value.get('longitude'));
+              });
+            });
+          },
         ),
       ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        appBar: PreferredSize(
+          child: AppBar(),
+          preferredSize: const Size.fromHeight(0),
+        ),
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: <Widget>[
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: GoogleMap(
+                initialCameraPosition:CameraPosition(target: LatLng(lat, long), zoom: 16),
+                mapType: MapType.normal,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: true,
+                onMapCreated: (GoogleMapController googleMapController) {
+                  setState(() {
+                    mapController = googleMapController;
+                    myMarker.add(
+                        Marker(
+                          draggable: true,
+                          markerId: MarkerId('$long'),
+                          position: LatLng(lat, long),
+                        ));
+                  });
+                },
+                markers: Set.from(myMarker),
+              ),
+            ),
+
+          ],
+        )
     );
   }
+
+
+
 }

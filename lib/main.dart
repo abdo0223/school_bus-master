@@ -8,6 +8,7 @@ import 'package:school_bus_za/screen/chat/cubit/chatscreen_state.dart';
 
 import 'package:school_bus_za/screen/login.dart';
 import 'package:school_bus_za/screen/map_screen.dart';
+import 'package:school_bus_za/screen/sideBarMenu.dart';
 
 import 'package:school_bus_za/shared/cash_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
             home: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (ctx, snapShot){
                   if(snapShot.hasData) {
-                    return MapScreen();
+                    return SideBar();
                   }
                   else{
                     return SchoolLoginScreen();

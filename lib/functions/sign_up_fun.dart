@@ -30,7 +30,9 @@ class SignUpFun {
 
     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
     await FirebaseFirestore.instance.collection('parents').doc(FirebaseAuth.instance.currentUser.uid)
-        .set({'name': userName, 'phone': phoneNumber, 'profile_image': imageUrl, 'children_num': 0});
+        .set({'name': userName, 'phone': phoneNumber, 'profile_image': imageUrl, 'children_num': 0,
+
+    });
 
   }
 }

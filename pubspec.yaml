@@ -54,6 +54,7 @@ dependencies:
   url_launcher: null
   material_floating_search_bar:
   page_transition: ^1.1.7+5
+  favorite_button: ^0.0.3
   ntp: ^1.0.8
 
 dev_dependencies:

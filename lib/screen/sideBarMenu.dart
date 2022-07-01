@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:school_bus_za/functions/drawer_fun.dart';
 import 'package:school_bus_za/screen/map_screen.dart';
@@ -19,6 +20,8 @@ class _SideBarState extends State<SideBar> {
   String imageUrl;
 
   Future _initFun() async{
+
+
     await _drawerFun.getParentDetails().then((value) {
       setState(() {
         name = value['name'];
